@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 
 const fileSchema = new mongoose.Schema({
-  fileName: String,
-  folderId: { type: mongoose.Schema.Types.ObjectId, ref: "Folder" },
-  filePath: String,
-  permissions: Object
+  name: { type: String, required: true },
+  folder: { type: mongoose.Schema.Types.ObjectId, ref: 'Folder', required: true },
+  path: { type: String, required: true },
+  permissions: { type: [String], default: [] },
 });
 
-module.exports = mongoose.model("File", fileSchema);
+export default mongoose.model('File', fileSchema);

@@ -1,9 +1,10 @@
-const express = require("express");
-const { createFolder } = require("../controllers/folderController");
-const authMiddleware = require("../middleware/authMiddleware");
+import express from 'express';
+import { createFolder, deleteFolder } from '../controllers/folderController.js';
+import { authenticate } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.post("/folders", authMiddleware, createFolder);
+router.post('/',  createFolder);
+router.delete('/:folderId', deleteFolder);
 
-module.exports = router;
+export default router;

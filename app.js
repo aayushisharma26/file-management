@@ -3,11 +3,19 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes.js';
 
+import spaceRoutes from './routes/spaceRoutes.js';
+import folderRoutes from './routes/folderRoutes.js';
+import fileRoutes from './routes/fileRoutes.js';
+
+
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use('/', userRoutes);
+app.use('/api/spaces', spaceRoutes);
+app.use('/api/folders', folderRoutes);
+app.use('/api/files', fileRoutes);
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,

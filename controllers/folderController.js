@@ -1,22 +1,23 @@
-const Folder = require("../models/folderModel");
-const Organization = require("../models/organizationModel");
+import Folder from '../models/folderModel.js';
 
-exports.createFolder = async (req, res) => {
-  const { orgId, folderName } = req.body;
+export const createFolder = async (req, res) => {
+  const { name, spaceId } = req.body;
 
   try {
-    const organization = await Organization.findById(orgId);
-    if (!organization) return res.status(400).json({ message: "Organization not found." });
+    const folder = await Folder.create({ name, space: spaceId });
+    res.status(201).json({ message: 'Folder created successfully', folder });
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating folder', error: error.message });
+  }
+};
 
-    const newFolder = new Folder({
-      orgId,
-      folderName,
-      createdBy: req.user._id
-    });
+export const deleteFolder = async (req, res) => {
+  const { folderId } = req.params;
 
-    await newFolder.save();
-    res.status(201).json({ message: "Folder created successfully" });
-  } catch (err) {
-    res.status(500).json({ message: "Error creating folder" });
+  try {
+    await Folder.findByIdAndDelete(folderId);
+    res.status(200).json({ message: 'Folder deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting folder', error: error.message });
   }
 };

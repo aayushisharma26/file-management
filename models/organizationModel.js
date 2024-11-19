@@ -1,8 +1,9 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 
 const orgSchema = new mongoose.Schema({
-  orgName: { type: String, unique: true },
-  admin: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
+  name: { type: String, required: true, unique: true },
+  subdomain: { type: String, required: true, unique: true },
+  admin: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 });
 
-module.exports = mongoose.model("Organization", orgSchema);
+export default mongoose.model('Organization', orgSchema);
