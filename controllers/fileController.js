@@ -15,7 +15,6 @@ export const uploadFile = async (req, res) => {
     res.status(500).json({ message: 'Error uploading file', error: error.message });
   }
 };
-
 export const updateFile = async (req, res) => {
   const { fileId } = req.params;
   const { permissions } = req.body;
@@ -26,9 +25,9 @@ export const updateFile = async (req, res) => {
     }
 
     const file = await File.findByIdAndUpdate(
-      fileId, 
-      { permissions }, 
-      { new: true } 
+      fileId,
+      { permissions }, // Update permissions field
+      { new: true } // return the updated file object
     );
 
     if (!file) {
@@ -47,11 +46,17 @@ export const retrieveFile = async (req, res) => {
 
   try {
     const file = await File.findById(fileId);
+
+    if (!file) {
+      return res.status(404).json({ message: "File not found" });
+    }
+
     res.status(200).json({ file });
   } catch (error) {
     res.status(500).json({ message: 'Error retrieving file', error: error.message });
   }
 };
+
 
 export const deleteFile = async (req, res) => {
   const { fileId } = req.params;
