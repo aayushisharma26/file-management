@@ -2,9 +2,12 @@ import mongoose from 'mongoose';
 
 const fileSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  folder: { type: mongoose.Schema.Types.ObjectId, ref: 'Folder', required: true },
   path: { type: String, required: true },
-  permissions: { type: [String], default: [] },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  permissions: { type: [String], default: [] }, // Make sure this field exists
 });
 
 export default mongoose.model('File', fileSchema);
+
+
+
